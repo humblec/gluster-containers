@@ -1,4 +1,4 @@
-FROM fedora
+FROM centos
 
 MAINTAINER Humble Chirammal hchiramm@redhat.com
 
