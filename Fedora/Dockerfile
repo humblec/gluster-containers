@@ -24,7 +24,7 @@ RUN yum --setopt=tsflags=nodocs -y install nfs-utils
 
 RUN yum --setopt=tsflags=nodocs -y install openssh-server
 
-RUN wget http://download.gluster.org/pub/gluster/glusterfs/3.6/LATEST/Fedora/glusterfs-fedora.repo -O /etc/yum.repos.d/glusterfs-fedora.repo
+RUN wget http://download.gluster.org/pub/gluster/glusterfs/3.7/LATEST/Fedora/glusterfs-fedora.repo -O /etc/yum.repos.d/glusterfs-fedora.repo
 
 RUN yum --setopt=tsflags=nodocs -y update
 
