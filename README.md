@@ -7,7 +7,6 @@ Although Setting up a glusterfs environment is a pretty simple and straight forw
 The community maintains docker images GlusterFS release 3.6 in both Fedora-21 and CentOS-7. The following are the steps to build the GlusterFS docker images that we maintain:
 To pull the docker image from the docker hub run the following command:
 For GlusterFS-3.6 in Fedora-21
-
 ~~~
 $ docker pull gluster/gluster-fedora
 
@@ -17,10 +16,20 @@ For GlusterFS-3.6 in CentOS-7
 ~~~
 $ docker pull gluster/gluster-centos
 
+$ docker pull gluster/gluster-fedora
+~~~
+
+For GlusterFS-3.6 in CentOS-7
+
+~~~
+$ docker pull gluster/gluster-centos
+
 ~~~
 
 This will fetch and build the docker image for you from the docker hub.
 Alternatively, one could build the image from the Dockerfile directly. For this, one should pull the Gluster-Fedora Dockerfile from the source repository and build the image using that. For getting the source, One can make use of git:
+
+~~~
 $ git clone git@github.com:gluster/docker.git
 This repository consists of Dockerfiles for GlusterFS built in both CentOS and Fedora distributions. Once you clone the repository, to build the image, run the following commands:
 For Fedora,
@@ -38,6 +47,23 @@ $ docker run --privileged -ti -p 22 image name
 ( is either gluster-fedora or gluster-centos as per the configurations so far)
 ~~~
 To detach this container you can press `Ctrl p + Ctrl q`
+
+~~~
+$ docker build -t gluster-fedora docker/Fedora/Dockerfile
+~~~
+
+For CentOS,
+~~~
+$ docker build -t gluster-centos docker/CentOS/Dockerfile
+~~~
+This command will build the docker image from the Dockerfile you just cloned and will be assigned the name gluster-fedora or gluster-centos respectively. ‘-t’ option is used to give a name to the image we are about the build.
+Once the image is built in either of the above two steps, we can now run the container with gluster daemon running. For this run the command:
+~~~
+$ docker run --privileged -ti -p 22 image name
+~~~
+( is either gluster-fedora or gluster-centos as per the configurations so far)
+
+To detach this container you can press Ctrl p + Ctrl q
 
 Systemd has been installed and is running in the container we maintain. This is to ensure that gluster daemon is up and running by the time we boot up our container and also to deal with the “Failed to get D-Bus connection” issue. To fix the issue Dan Walsh’s blog on the same matter has been the only resource: developerblog.redhat.com/2014/05/05/running-systemd-within-docker-container/
 For systemd to run without crashing it is necessary to run the container in the privileged mode since systemd requires CAP_SYS_ADMIN capability. As per the help of docker run shows, ‘-t’ option is given to alocate a psedo-TTY and’i stands for the interactive mode which keeps STDIN open even if not attached. The port 22 has been published to the host so that one can ssh into the container that will be running once this command is issued. In the docker file, the password for the root has been changed to ‘password’ for user to ssh into the running container.
