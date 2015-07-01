@@ -39,4 +39,5 @@ EXPOSE 22 111 245 443 24007 2049 8080 6010 6011 6012 38465 38466 38468 38469 491
 
 RUN systemctl enable rpcbind.service
 RUN systemctl enable sshd.service
+RUN systemctl enable glusterd.service
 CMD ["/usr/sbin/init"]
