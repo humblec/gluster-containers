@@ -19,7 +19,7 @@ RUN yum --setopt=tsflags=nodocs -y install wget nfs-utils attr iputils iproute
 
 RUN wget http://download.gluster.org/pub/gluster/glusterfs/3.7/LATEST/EPEL.repo/glusterfs-epel.repo -O /etc/yum.repos.d/glusterfs-epel.repo
 
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm; rpm -ivh epel-release-7-6.noarch.rpm; rm epel-release-7-6.noarch.rpm;
+RUN wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm; rpm -ivh epel-release-latest-7.noarch.rpm; rm epel-release-latest-7.noarch.rpm;
 
 RUN yum --setopt=tsflags=nodocs -y install glusterfs glusterfs-server glusterfs-geo-replication openssh-server
 
