@@ -1,10 +1,10 @@
-FROM centos:7
+FROM fedora:23
 
-MAINTAINER Humble Chirammal hchiramm@redhat.com, Mohamed Ashiq Liyazudeen mliyazud@redhat.com
+MAINTAINER Humble Chirammal hchiramm@redhat.com Mohamed Ashiq Liyazudeen mliyazud@redhat.com
 
 ENV container docker
 
-RUN yum --setopt=tsflags=nodocs -y update; yum clean all;
+RUN dnf --setopt=tsflags=nodocs -y update; dnf clean all;
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -15,13 +15,7 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
-RUN yum --setopt=tsflags=nodocs -y install wget nfs-utils attr iputils iproute
-
-RUN wget http://download.gluster.org/pub/gluster/glusterfs/3.7/LATEST/EPEL.repo/glusterfs-epel.repo -O /etc/yum.repos.d/glusterfs-epel.repo
-
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm; rpm -ivh epel-release-7-6.noarch.rpm; rm epel-release-7-6.noarch.rpm;
-
-RUN yum --setopt=tsflags=nodocs -y install openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication;yum clean all;
+RUN dnf --setopt=tsflags=nodocs -y install nfs-utils attr iputils iproute openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication;dnf clean all;
 
 RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
 
