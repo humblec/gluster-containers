@@ -1,4 +1,4 @@
-FROM fedora:23
+FROM fedora:22
 
 MAINTAINER Humble Chirammal hchiramm@redhat.com Mohamed Ashiq Liyazudeen mliyazud@redhat.com
 
