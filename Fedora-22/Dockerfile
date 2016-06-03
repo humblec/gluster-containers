@@ -4,7 +4,7 @@ MAINTAINER Humble Chirammal hchiramm@redhat.com Mohamed Ashiq Liyazudeen mliyazu
 
 ENV container docker
 
-RUN dnf --setopt=tsflags=nodocs -y update; dnf clean all;
+RUN dnf --setopt=tsflags=nodocs -y update; dnf --setopt=tsflags=nodocs -y install wget; dnf clean all;
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -17,7 +17,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 RUN wget http://download.gluster.org/pub/gluster/glusterfs/3.7/LATEST/Fedora/glusterfs-fedora.repo -O /etc/yum.repos.d/glusterfs-fedora.repo
 
-RUN dnf --setopt=tsflags=nodocs -y install nfs-utils attr iputils iproute openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication;dnf clean all;
+RUN dnf --setopt=tsflags=nodocs -y install nfs-utils attr iputils iproute openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication; dnf clean all;
 
 RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
 
