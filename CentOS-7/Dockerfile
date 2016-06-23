@@ -38,6 +38,11 @@ cp -r /var/log/glusterfs/* /var/log/glusterfs_bkp;
 ADD gluster-setup.service /etc/systemd/system/gluster-setup.service
 RUN chmod 644 /etc/systemd/system/gluster-setup.service
 
+# Configure LVM to create LVs and snapshots
+RUN sed -i.save -e "s#udev_sync = 1#udev_sync = 0#" \
+    -e "s#udev_rules = 1#udev_rules = 0#" \
+    -e "s#use_lvmetad = 1#use_lvmetad = 0#" /etc/lvm/lvm.conf
+
 # Adding script to move the glusterfs config file to location
 ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 RUN chmod 500 /usr/sbin/gluster-setup.sh
