@@ -18,14 +18,10 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 RUN yum --setopt=tsflags=nodocs -y install wget nfs-utils attr iputils iproute
 
 RUN wget http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/glusterfs-epel.repo -O /etc/yum.repos.d/glusterfs-epel.repo
-
 RUN wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm; rpm -ivh epel-release-latest-7.noarch.rpm; rm epel-release-latest-7.noarch.rpm;
-
 
 RUN yum --setopt=tsflags=nodocs -y install openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication;yum clean all;
 
-RUN echo 'root:password' | chpasswd
-VOLUME [ "/sys/fs/cgroup" ]
 RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
 
 # Changing the port of sshd to avoid conflicting with host sshd
@@ -57,4 +53,3 @@ RUN systemctl enable gluster-setup.service
 EXPOSE 2222 111 245 443 24007 2049 8080 6010 6011 6012 38465 38466 38468 38469 49152 49153 49154 49156 49157 49158 49159 49160 49161 49162
 
 CMD ["/usr/sbin/init"]
-
