@@ -1,6 +1,6 @@
 FROM centos:latest
 
-MAINTAINER Humble Chirammal hchiramm@redhat.com
+MAINTAINER Humble Chirammal hchiramm@redhat.com Mohamed Ashiq Liyazudeen mliyazud@redhat.com
 
 ENV container docker
 
@@ -29,6 +29,11 @@ RUN mkdir -p /etc/glusterfs_bkp /var/lib/glusterd_bkp /var/log/glusterfs_bkp;\
 cp -r /etc/glusterfs/* /etc/glusterfs_bkp;\
 cp -r /var/lib/glusterd/* /var/lib/glusterd_bkp;\
 cp -r /var/log/glusterfs/* /var/log/glusterfs_bkp;
+
+# Configure LVM to create LVs and snapshots
+RUN sed -i.save -e "s#udev_sync = 1#udev_sync = 0#" \
+   -e "s#udev_rules = 1#udev_rules = 0#" \
+   -e "s#use_lvmetad = 1#use_lvmetad = 0#" /etc/lvm/lvm.conf
 
 # Adding script to move the glusterfs config file to location
 ADD gluster-setup.service /etc/systemd/system/gluster-setup.service
