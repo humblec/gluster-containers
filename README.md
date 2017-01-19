@@ -36,10 +36,18 @@ For CentOS,
 $ docker build -t gluster-centos docker/CentOS/Dockerfile
 ~~~
 This command will build the docker image from the Dockerfile you just cloned and will be assigned the name gluster-fedora or gluster-centos respectively. ‘-t’ option is used to give a name to the image we are about the build.
-Once the image is built in either of the above two steps, we can now run the container with gluster daemon running. For this run the command:
 
+Once the image is built in either of the above two steps, we can now run the container with gluster daemon running. 
+
+Before this, ensure the following directories are created in the system from where docker is launched:
+ -  /etc/glusterfs
+ - /var/lib/glusterd
+ - /var/log/glusterfs
+Also, ensure they are empty to avoid any conflicts.
+Now run the following command:
 ~~~
-$ docker run -v /etc/glusterfs:/etc/glusterfs;z -v /var/lib/glusterd:/var/lib/glusterd:z -v /var/log/glusterfs:/var/log/glusterfs:z -v /sys/fs/group:/sys/fs/cgroup:ro -d --privileged=true --net=host -v /dev/:/dev gluster/gluster-centos
+
+$ docker run -v /etc/glusterfs:/etc/glusterfs:z -v /var/lib/glusterd:/var/lib/glusterd:z -v /var/log/glusterfs:/var/log/glusterfs:z -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d --privileged=true --net=host -v /dev/:/dev gluster/gluster-centos
 ~~~
 
 ( is either gluster-fedora or gluster-centos as per the configurations so far)
@@ -94,7 +102,7 @@ The IP address is “172.17.0.2”
 ##### Get inside the container
 
 ~~~
-$ docker exec -ti d273cc739c9d
+$ docker exec -ti d273cc739c9d bash
 
 -bash-4.3# ps aux |grep glusterd
 root 34 0.0 0.0 448092 15800 ? Ssl 06:01 0:00 /usr/sbin/glusterd -p /var/run/glusterd.pid
