@@ -1,4 +1,6 @@
-This repo contains dockerfiles (CentOS, Fedora, Red Hat) for GlusterFS containers.
+This repo contains dockerfiles (CentOS, Fedora, Red Hat) for GlusterFS containers namely server, client and object.
+
+## Gluster Server Docker container:
 
 Although Setting up a glusterfs environment is a pretty simple and straight forward procedure, Gluster community do maintain docker images for gluster both in Fedora and CentOS in the docker hub for the ease of users. This blog is intented to walk the user through the steps of running GlusterFS with the help of docker.
 The community maintains docker images of GlusterFS release in both Fedora and CentOS distributions. The following are the steps to build the GlusterFS docker images that we maintain:
@@ -45,6 +47,7 @@ Before this, ensure the following directories are created in the system from whe
  - /var/log/glusterfs
 Also, ensure they are empty to avoid any conflicts.
 Now run the following command:
+
 ~~~
 
 $ docker run -v /etc/glusterfs:/etc/glusterfs:z -v /var/lib/glusterd:/var/lib/glusterd:z -v /var/log/glusterfs:/var/log/glusterfs:z -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d --privileged=true --net=host -v /dev/:/dev gluster/gluster-centos
@@ -118,3 +121,41 @@ That’s it!
 
 
 Additional Ref# https://goo.gl/3031Mm
+
+## Gluster Object Docker container:
+
+### To pull gluster-object:
+~~~
+$ docker pull gluster/gluster-object
+
+~~~
+
+### To run gluster-object container:
+
+On the host machine, mount one or more gluster volumes under the directory
+`/mnt/gluster-object` with mountpoint name being same as that of the volume.
+
+For example, if you have two gluster volumes named `test` and `test2`, they
+should be mounted at `/mnt/gluster-object/test` and `/mnt/gluster-object/test2`
+respectively. This directory on the host machine containing all the individual
+glusterfs mounts is then bind-mounted inside the container. This avoids having
+to bind mount individual gluster volumes.
+
+The same needs to be updated in etc/sysconfig/swift-volumes.
+
+For example(in swift-volumes):
+GLUSTER_VOLUMES='tv1'
+
+Where tv1 is the volume name.
+
+~~~
+$ docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object    gluster/gluster-object
+
+~~~
+
+Now, We can get/put objects into the gluster volume, using the gluster-object Docker container.
+Refer this link[1] for testing.
+
+[1] https://github.com/gluster/gluster-swift/blob/master/doc/markdown/quick_start_guide.md#using_swift
+
+
