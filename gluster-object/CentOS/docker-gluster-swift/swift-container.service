@@ -1,0 +1,10 @@
+[Unit]
+Description=Swift Container Service
+After=swift-account.service
+
+[Service]
+ExecStart=/usr/bin/python /usr/bin/swift-container-server /etc/swift/container-server.conf
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
