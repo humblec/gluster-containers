@@ -1,0 +1,10 @@
+[Unit]
+Description=Swift Account Service
+After=swift-proxy.service
+
+[Service]
+ExecStart=/usr/bin/python /usr/bin/swift-account-server /etc/swift/account-server.conf
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

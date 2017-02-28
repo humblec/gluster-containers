@@ -1,0 +1,11 @@
+[Unit]
+Description=Swift Gen Builders
+Before=memcached.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/sysconfig/swift-volumes
+ExecStart=/usr/bin/gluster-swift-gen-builders $GLUSTER_VOLUMES
+
+[Install]
+WantedBy=multi-user.target
