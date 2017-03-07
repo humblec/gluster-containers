@@ -43,7 +43,7 @@ RUN chmod 644 /etc/systemd/system/gluster-setup.service
 ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 RUN chmod 500 /usr/sbin/gluster-setup.sh
 
-RUN echo 'root:password' | chpasswd
+#RUN echo 'root:password' | chpasswd
 VOLUME [ “/sys/fs/cgroup” ]
 
 RUN systemctl disable nfs-server.service
