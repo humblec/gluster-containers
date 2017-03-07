@@ -24,6 +24,14 @@ RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
 # Changing the port of sshd to avoid conflicting with host sshd
 RUN sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config
 
+# Fixing RPC port conflict issue
+RUN sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service
+
+RUN sed -i 's/rpcbind\.service/gluster-setup\.service/g' /usr/lib/systemd/system/glusterd.service
+
+# Fix for the separate /var on host issue
+RUN sed -i 's/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", ENV{SYSTEMD_READY}="0"/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", GOTO="systemd_end"/g' /usr/lib/udev/rules.d/99-systemd.rules
+
 # Backing up gluster config as it overlaps when bind mounting.
 RUN mkdir -p /etc/glusterfs_bkp /var/lib/glusterd_bkp /var/log/glusterfs_bkp;\
 cp -r /etc/glusterfs/* /etc/glusterfs_bkp;\
@@ -43,12 +51,13 @@ RUN chmod 644 /etc/systemd/system/gluster-setup.service
 ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 RUN chmod 500 /usr/sbin/gluster-setup.sh
 
-RUN echo 'root:password' | chpasswd
+#RUN echo 'root:password' | chpasswd
 VOLUME [ "/sys/fs/cgroup" ]
 
 RUN systemctl disable nfs-server.service
+# stops getty from consuming all the memory
+RUN systemctl mask getty.target
 RUN systemctl enable ntpd.service
-RUN systemctl enable rpcbind.service
 RUN systemctl enable glusterd.service
 RUN systemctl enable gluster-setup.service
 
