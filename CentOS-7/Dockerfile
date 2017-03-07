@@ -45,7 +45,7 @@ RUN sed -i.save -e "s#udev_sync = 1#udev_sync = 0#" \
 ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 RUN chmod 500 /usr/sbin/gluster-setup.sh
 
-RUN echo 'root:password' | chpasswd
+#RUN echo 'root:password' | chpasswd
 VOLUME [ “/sys/fs/cgroup” ]
 
 RUN systemctl disable nfs-server.service
