@@ -42,7 +42,8 @@ RUN yum -v --setopt=tsflags=nodocs -y update && \
 RUN git clone git://review.gluster.org/gluster-swift /tmp/gluster-swift && \
     cd /tmp/gluster-swift && \
     python setup.py install && \
-    cd -
+    cd - && \
+    rm -rf /tmp/gluster-swift
 
 # Gluster volumes will be mounted *under* this directory.
 VOLUME /mnt/gluster-object
