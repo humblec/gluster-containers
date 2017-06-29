@@ -119,12 +119,12 @@ Additional Ref# https://goo.gl/3031Mm
 
 ## Gluster Object Docker container:
 
-### To pull gluster-object:
+### To pull gluster-s3:
 ~~~
-$ docker pull gluster/gluster-object
+$ docker pull gluster/gluster-s3
 ~~~
 
-### To run gluster-object container:
+### To run gluster-s3 container:
 
 On the host machine, mount one or more gluster volumes under the directory
 `/mnt/gluster-object` with mountpoint name being same as that of the volume.
@@ -143,10 +143,10 @@ GLUSTER_VOLUMES='tv1'
 Where tv1 is the volume name.
 
 ~~~
-$ docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object  gluster/gluster-object
+$ docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object  gluster/gluster-s3
 ~~~
 
-Now, We can get/put objects into the gluster volume, using the gluster-object Docker container.
+Now, We can get/put objects into the gluster volume, using the gluster-s3 Docker container.
 Refer this link[1] for testing.
 
 [1] https://github.com/gluster/gluster-swift/blob/master/doc/markdown/quick_start_guide.md#using_swift
