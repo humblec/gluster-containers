@@ -114,7 +114,6 @@ Number of Peers: 0
 ~~~
 That’s it!
 
-
 Additional Ref# https://goo.gl/3031Mm
 
 ## Gluster Object Docker container:
