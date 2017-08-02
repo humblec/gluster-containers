@@ -1,4 +1,4 @@
 # Set Gluster volumes to be used by gluster-object service
-GLUSTER_VOLUMES="tv1"
-GLUSTER_USER="admin"
-GLUSTER_PASSWORD="redhat"
+S3_ACCOUNT="tv1"
+S3_USER="admin"
+S3_PASSWORD="redhat"

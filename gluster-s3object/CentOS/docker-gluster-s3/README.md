@@ -23,14 +23,14 @@ to bind mount individual gluster volumes.
 
 The same needs to be updated in etc/sysconfig/swift-volumes.
 For example(in swift-volumes):
-GLUSTER_VOLUMES='tv1'
+S3_ACCOUNT='tv1'
 
 Where tv1 is the volume name.
 
 **Example:**
 
 ```bash
-# docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object -e GLUSTER_VOLUMES="tv1" -e GLUSTER_USER="admin" -e GLUSTER_PASSWORD="redhat" gluster-s3
+# docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object -e S3_ACCOUNT="tv1" -e S3_USER="admin" -e S3_PASSWORD="redhat" gluster-s3
 ```
 
 If you have selinux set to enforced on the host machine, refer to the
@@ -46,7 +46,7 @@ Troubleshooting section below before running the container.
      the same host machine.
 -v : Bind mount a host path inside the container.
 -e : Set and pass environment variable. In our case, provide a list of volumes
-     to be exported over object inerface by setting GLUSTER_VOLUMES environment
+     to be exported over object inerface by setting S3_ACCOUNT environment
      variable.
 ~~~
 

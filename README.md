@@ -137,12 +137,12 @@ to bind mount individual gluster volumes.
 The same needs to be updated in etc/sysconfig/swift-volumes.
 
 For example(in swift-volumes):
-GLUSTER_VOLUMES='tv1'
+S3_ACCOUNT='tv1'
 
 Where tv1 is the volume name.
 
 ~~~
-$ docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object  gluster/gluster-s3
+$ docker run -d --privileged  -v /sys/fs/cgroup/:/sys/fs/cgroup/:ro -p 8080:8080 -v /mnt/gluster-object:/mnt/gluster-object -e S3_ACCOUNT="tv1" -e S3_USER="admin" -e S3_PASSWORD="redhat" gluster/gluster-s3
 ~~~
 
 Now, We can get/put objects into the gluster volume, using the gluster-s3 Docker container.
