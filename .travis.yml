@@ -26,7 +26,7 @@ before_install:
 - sleep 10
 - docker exec -it gfedora systemctl is-active glusterd
 - docker build -t gluster/s3object ./gluster-s3object/CentOS/docker-gluster-s3/
-- docker run -d --name s3object --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -e GLUSTER_VOLUMES=vol -e GLUSTER_USER="admin" -e GLUSTER_PASSWORD="redhat" gluster/s3object
+- docker run -d --name s3object --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -e S3_ACCOUNT=vol -e S3_USER="admin" -e S3_PASSWORD="redhat" gluster/s3object
 - sleep 10
 - docker exec -it s3object systemctl is-active swift-object
 

@@ -5,7 +5,7 @@ After=swift-object.service
 [Service]
 Type=oneshot
 EnvironmentFile=-/etc/sysconfig/swift-volumes
-ExecStart=/usr/local/bin/gluster-swift-add-user $GLUSTER_USER $GLUSTER_PASSWORD $GLUSTER_VOLUMES
+ExecStart=/usr/local/bin/gluster-swift-add-user $S3_USER $S3_PASSWORD $S3_ACCOUNT
 
 [Install]
 WantedBy=multi-user.target
