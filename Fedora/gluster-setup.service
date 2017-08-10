@@ -1,0 +1,10 @@
+[Unit]
+Description=Configuring GlusterFS in container
+Before=glusterd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/gluster-setup.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -21,10 +21,30 @@ before_install:
 - docker run -d --name gcentos --privileged gluster/centos
 - sleep 10
 - docker exec -it gcentos systemctl is-active glusterd
+- docker stop gcentos
+- docker rm gcentos
+- sudo mkdir -p /home/centos-glusterd
+- sudo mkdir -p /home/centos-gluster-etc
+- sudo mkdir -p /home/centos-gluster-log
+- docker run -d --name gcentos -v /home/centos-glusterd:/var/lib/glusterd/:z -v /home/centos-gluster-etc:/etc/glusterfs:z -v /home/centos-gluster-log:/var/log/glusterfs --privileged gluster/centos
+- sleep 10
+- docker exec -it gcentos systemctl is-active glusterd
+- docker stop gcentos
+- docker rm gcentos
 - docker build -t gluster/fedora ./Fedora/
 - docker run -d --name gfedora --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro gluster/fedora
 - sleep 10
 - docker exec -it gfedora systemctl is-active glusterd
+- docker stop gfedora
+- docker rm gfedora
+- sudo mkdir -p /home/fedora-glusterd
+- sudo mkdir -p /home/fedora-gluster-etc
+- sudo mkdir -p /home/fedora-gluster-log
+- docker run -d --name gfedora -v /home/fedora-glusterd:/var/lib/glusterd/:z -v /home/fedora-gluster-etc:/etc/glusterfs:z -v /home/fedora-gluster-log:/var/log/glusterfs -v /sys/fs/cgroup:/sys/fs/cgroup:ro --privileged gluster/fedora
+- sleep 10
+- docker exec -it gfedora systemctl is-active glusterd
+- docker stop gfedora
+- docker rm gfedora
 - docker build -t gluster/s3object ./gluster-s3object/CentOS/docker-gluster-s3/
 - docker run -d --name s3object --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -e S3_ACCOUNT=vol -e S3_USER="admin" -e S3_PASSWORD="redhat" gluster/s3object
 - sleep 10

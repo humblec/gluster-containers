@@ -62,25 +62,25 @@ main () {
         fi
         echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sleep 40
-        cut -f 2 -d " " $GLUSTERFS_CUSTOM_FSTAB | while read -r line
+        cut -f 2 -d " " $GLUSTERFS_CUSTOM_FSTAB | while read line
         do
               if grep -qs "$line" /proc/mounts; then
                    echo "$line mounted." >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
                    if test "ls $line/brick"
                    then
                          echo "$line/brick is present" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
-                         getfattr -d -m . -e hex "$line"/brick >> $GLUSTERFS_LOG_CONT_DIR/brickattr
+                         getfattr -d -m . -e hex $line/brick >> $GLUSTERFS_LOG_CONT_DIR/brickattr
                    else
                          echo "$line/brick is not present" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
                          sleep 1
                    fi
               else
-		   grep "$line" $GLUSTERFS_CUSTOM_FSTAB >> $GLUSTERFS_LOG_CONT_DIR/failed_bricks
+		   grep $line $GLUSTERFS_CUSTOM_FSTAB >> $GLUSTERFS_LOG_CONT_DIR/failed_bricks
                    echo "$line not mounted." >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
                    sleep 0.5
              fi
         done
-        if [ "$(wc -l $GLUSTERFS_LOG_CONT_DIR/failed_bricks )" -gt 1 ]
+        if [ $(wc -l $GLUSTERFS_LOG_CONT_DIR/failed_bricks ) -gt 1 ]
         then
               vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
               sleep 10
