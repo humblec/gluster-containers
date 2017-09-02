@@ -23,7 +23,7 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;\
-yum --setopt=tsflags=nodocs -y install nfs-utils attr iputils iproute openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-geo-replication;yum clean all; \
+yum --setopt=tsflags=nodocs -y install nfs-utils attr iputils iproute openssh-server openssh-clients ntp rsync tar cronie sudo xfsprogs glusterfs glusterfs-server glusterfs-rdma glusterfs-geo-replication;yum clean all; \
 sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers; \
 sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config; \
 sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service; \
