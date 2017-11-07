@@ -25,7 +25,7 @@ RUN yum -v --setopt=tsflags=nodocs -y update && \
         epel-release && \
     yum -v --setopt=tsflags=nodocs -y install \
         openstack-swift openstack-swift-{proxy,account,container,object,plugin-swift3} \
-        git memcached python-prettytable && \
+        git memcached python-prettytable python-setuptools && \
     yum -y install systemd && \
         (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
         rm -f /lib/systemd/system/multi-user.target.wants/*;\
