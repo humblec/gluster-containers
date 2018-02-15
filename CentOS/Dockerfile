@@ -6,8 +6,8 @@ ENV container docker
 
 LABEL architecture="x86_64" \
       name="gluster/gluster-centos" \
-      version="3.10" \
-      vendor="Red Hat, Inc" \
+      version="3.12" \
+      vendor="CentOS Community" \
       summary="This image has a running glusterfs service ( CentOS 7 + Gluster 3.10)" \
       io.k8s.display-name="Gluster 3.10 based on CentOS 7" \
       io.k8s.description="Gluster Image is based on CentOS Image which is a scalable network filesystem. Using common off-the-shelf hardware, you can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks." \
