@@ -27,13 +27,13 @@ RUN yum -v --setopt=tsflags=nodocs -y update && \
         openstack-swift openstack-swift-{proxy,account,container,object,plugin-swift3} \
         git memcached python-prettytable python-setuptools && \
     yum -y install systemd && \
-        (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-        rm -f /lib/systemd/system/multi-user.target.wants/*;\
-        rm -f /etc/systemd/system/*.wants/*;\
-        rm -f /lib/systemd/system/local-fs.target.wants/*; \
-        rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-        rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-        rm -f /lib/systemd/system/basic.target.wants/*;\
+        (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done) && \
+        rm -f /lib/systemd/system/multi-user.target.wants/* &&\
+        rm -f /etc/systemd/system/*.wants/* &&\
+        rm -f /lib/systemd/system/local-fs.target.wants/* && \
+        rm -f /lib/systemd/system/sockets.target.wants/*udev* && \
+        rm -f /lib/systemd/system/sockets.target.wants/*initctl* && \
+        rm -f /lib/systemd/system/basic.target.wants/* &&\
         rm -f /lib/systemd/system/anaconda.target.wants/* && \
     yum -y clean all
 
@@ -75,13 +75,13 @@ EXPOSE 8080
 RUN echo 'root:password' | chpasswd
 VOLUME [ "/sys/fs/cgroup" ]
 
-RUN systemctl enable swift-gen-builders.service;\
-systemctl enable memcached.service;\
-systemctl enable swift-proxy.service;\
-systemctl enable swift-account.service;\
-systemctl enable swift-container.service;\
-systemctl enable swift-object.service;\
-systemctl enable swift-adduser.service;
+RUN systemctl enable swift-gen-builders.service &&\
+systemctl enable memcached.service &&\
+systemctl enable swift-proxy.service &&\
+systemctl enable swift-account.service &&\
+systemctl enable swift-container.service &&\
+systemctl enable swift-object.service &&\
+systemctl enable swift-adduser.service
 
 ENTRYPOINT ["/usr/local/bin/update_gluster_vol.sh"]
 CMD ["/usr/sbin/init"]
