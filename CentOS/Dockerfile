@@ -6,15 +6,15 @@ ENV container docker
 
 LABEL architecture="x86_64" \
       name="gluster/gluster-centos" \
-      version="3.10" \
+      version="3.11" \
       vendor="CentOS Community" \
-      summary="This image has a running glusterfs service ( CentOS 7 + Gluster 3.10)" \
-      io.k8s.display-name="Gluster 3.10 based on CentOS 7" \
+      summary="This image has a running glusterfs service ( CentOS 7 + Gluster 3.11)" \
+      io.k8s.display-name="Gluster 3.11 based on CentOS 7" \
       io.k8s.description="Gluster Image is based on CentOS Image which is a scalable network filesystem. Using common off-the-shelf hardware, you can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks." \
       description="Gluster Image is based on CentOS Image which is a scalable network filesystem. Using common off-the-shelf hardware, you can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks." \
       io.openshift.tags="gluster,glusterfs,glusterfs-centos"
 
-RUN yum --setopt=tsflags=nodocs -y update; yum install -y centos-release-gluster310; yum clean all; \
+RUN yum --setopt=tsflags=nodocs -y update; yum install -y centos-release-gluster311; yum clean all; \
 (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
 rm -f /etc/systemd/system/*.wants/*;\
