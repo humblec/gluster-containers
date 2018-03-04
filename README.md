@@ -1,4 +1,15 @@
-This repo contains dockerfiles (CentOS and Fedora) for GlusterFS containers namely server, client and object.
+This repo contains dockerfiles (CentOS and Fedora) for GlusterFS containers namely server, client and S3.
+
+
+The support matrix of GlusterFS and container versions:
+
+
+|                |GlusterFS  Version                    |Container Tag   | Container name                     |
+|----------------|-------------------------------|-----------------------------|------------------|
+|GlusterFS Server Container|`v3.13,  v3.12, v3.11, v3.10`            |`gluster3u13_centos7`, `gluster3u12_centos7`, `gluster3u11_centos7`, `gluster3u10_centos7` |            `gluster-centos`|
+|GlusterFS Client Container       |`v3.13`            |`latest`            |`glusterfs-client`
+|Gluster S3 Server Container         |`v3.13,  v3.12, v3.11, v3.10`|`latest`|`gluster-s3`
+
 
 ## Gluster Server Docker container:
 
