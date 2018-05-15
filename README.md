@@ -57,7 +57,12 @@ Before this, ensure the following directories are created on the host where dock
  - /etc/glusterfs
  - /var/lib/glusterd
  - /var/log/glusterfs
-Also, ensure they are empty to avoid any conflicts.
+
+Ensure all the above directories are empty to avoid any conflicts.
+
+Also, ntp service like chronyd / ntpd service needs to be started in the host.
+This way all the gluster containers started will be time synchronized.
+
 Now run the following command:
 
 ~~~
