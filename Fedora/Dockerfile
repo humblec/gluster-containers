@@ -29,7 +29,7 @@ COPY gluster-setup.sh gluster-brickmultiplex.service gluster-brickmultiplex.sh g
 
 RUN dnf -y update && \
     sed -i "s/LANG/\#LANG/g" /etc/locale.conf && \
-    dnf -y install systemd-udev ntp glusterfs-server dbus-python nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos sudo xfsprogs && \
+    dnf -y install systemd-udev glusterfs-server dbus-python nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos sudo xfsprogs && \
     dnf clean all && \
     sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config && \
     sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service && \
@@ -57,7 +57,6 @@ RUN dnf -y update && \
     systemctl disable nfs-server.service && \
     systemctl enable rpcbind.service && \
     systemctl enable sshd.service && \
-    systemctl enable ntpd.service && \
     systemctl enable gluster-setup.service && \
     systemctl enable gluster-brickmultiplex.service && \
     systemctl enable glusterd.service
