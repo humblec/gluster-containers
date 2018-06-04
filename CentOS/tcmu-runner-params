@@ -1,0 +1,2 @@
+# tcmu log directory used by tcmu-runner
+TCMU_LOGDIR=/var/log/gluster-block/

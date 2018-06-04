@@ -1,0 +1,10 @@
+[Unit]
+Description=Configuring gluster-block in container
+Before=gluster-blockd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/gluster-block-setup.sh
+
+[Install]
+WantedBy=multi-user.target
