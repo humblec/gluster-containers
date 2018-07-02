@@ -54,7 +54,7 @@ main () {
         pvscan > $GLUSTERFS_LOG_CONT_DIR/pvscan
         vgscan > $GLUSTERFS_LOG_CONT_DIR/vgscan
         lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
-        mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB > $GLUSTERFS_LOG_CONT_DIR/mountfstab
+        mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         if [ $? -eq 1 ]
         then
               echo "mount command exited with code 1" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
