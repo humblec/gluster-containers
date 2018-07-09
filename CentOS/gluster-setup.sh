@@ -54,10 +54,11 @@ main () {
         pvscan > $GLUSTERFS_LOG_CONT_DIR/pvscan
         vgscan > $GLUSTERFS_LOG_CONT_DIR/vgscan
         lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
-        mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB > $GLUSTERFS_LOG_CONT_DIR/mountfstab
-        if [ $? -eq 1 ]
+        mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+        sts=$?
+        if [ $sts -ne 0 ]
         then
-              echo "mount binary not failed" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+              echo "mount command exited with code ${sts}" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
               exit 1
         fi
         echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
