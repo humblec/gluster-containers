@@ -3,7 +3,7 @@
 # Disk full
 while true
 do
-        # sleep early to get this settled first.
+        # sleep early to get glusterd settled
         sleep 120
         current_usage=$( df --output=pcent  '/var/lib/glusterd' | tail -n1  | awk {'print $1'} )
         max_usage=99%
