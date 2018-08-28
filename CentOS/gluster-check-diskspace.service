@@ -4,7 +4,7 @@ After=glusterd.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/check_size.sh
+ExecStart=/usr/local/bin/check_diskspace.sh
 
 [Install]
 WantedBy=multi-user.target
