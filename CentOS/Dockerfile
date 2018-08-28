@@ -60,7 +60,7 @@ ADD gluster-block-setup.sh /usr/sbin/gluster-block-setup.sh
 ADD update-params.sh /usr/local/bin/update-params.sh
 ADD tcmu-runner-params /etc/sysconfig/tcmu-runner-params
 ADD gluster-check-size.service  /etc/systemd/system/gluster-check-size.service
-ADD readiness_probe.sh /usr/local/bin/readiness_probe.sh
+ADD check_size.sh /usr/local/bin/check_size.sh
 
 RUN chmod 644 /etc/systemd/system/gluster-setup.service && \
 chmod 644 /etc/systemd/system/gluster-check-size.service && \
@@ -68,7 +68,7 @@ chmod 500 /usr/sbin/gluster-setup.sh && \
 chmod 644 /etc/systemd/system/gluster-block-setup.service && \
 chmod 500 /usr/sbin/gluster-block-setup.sh && \
 chmod +x /usr/local/bin/update-params.sh && \
-chmod +x /usr/local/bin/readiness_probe.sh && \
+chmod +x /usr/local/bin/check_size.sh && \
 systemctl disable nfs-server.service && \
 systemctl mask getty.target && \
 systemctl enable gluster-setup.service && \
