@@ -3,7 +3,7 @@ Description=Check glusterd config directory full
 After=glusterd.service
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/usr/local/bin/readiness_probe.sh
 
 [Install]
