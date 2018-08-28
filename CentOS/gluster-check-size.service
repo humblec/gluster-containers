@@ -1,0 +1,10 @@
+[Unit]
+Description=Check glusterd config directory full
+After=glusterd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/readiness_probe.sh
+
+[Install]
+WantedBy=multi-user.target
