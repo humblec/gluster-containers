@@ -54,6 +54,8 @@ main () {
         pvscan > $GLUSTERFS_LOG_CONT_DIR/pvscan
         vgscan > $GLUSTERFS_LOG_CONT_DIR/vgscan
         lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
+        vgchange -ay > $GLUSTERFS_LOG_CONT_DIR/vgchange
+
         mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sts=$?
         if [ $sts -ne 0 ]
