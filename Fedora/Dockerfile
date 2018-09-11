@@ -26,6 +26,8 @@ VOLUME [ "/sys/fs/cgroup/" ]
 ADD https://github.com/gluster/gluster-containers/blob/master/README.md /README.md
 
 COPY gluster-setup.sh gluster-brickmultiplex.service gluster-brickmultiplex.sh gluster-setup.service /
+COPY gluster-fake-disk.service /etc/systemd/system/gluster-fake-disk.service
+COPY fake-disk.sh /usr/libexec/gluster/fake-disk.sh
 
 RUN dnf -y update && \
     sed -i "s/LANG/\#LANG/g" /etc/locale.conf && \
@@ -46,6 +48,7 @@ RUN dnf -y update && \
     mv /gluster-brickmultiplex.service /etc/systemd/system/gluster-brickmultiplex.service && \
     mv /gluster-brickmultiplex.sh /usr/sbin/gluster-brickmultiplex.sh && \
     mv /gluster-setup.service /etc/systemd/system/gluster-setup.service && \
+    chmod 755 /usr/libexec/gluster/fake-disk.sh && \
     chmod 644 /etc/systemd/system/gluster-setup.service && \
     chmod 500 /usr/sbin/gluster-setup.sh && \
     ln -s /usr/sbin/gluster-setup.sh /usr/sbin/setup.sh && \
@@ -57,6 +60,7 @@ RUN dnf -y update && \
     systemctl disable nfs-server.service && \
     systemctl enable rpcbind.service && \
     systemctl enable sshd.service && \
+    systemctl enable gluster-fake-disk.service && \
     systemctl enable gluster-setup.service && \
     systemctl enable gluster-brickmultiplex.service && \
     systemctl enable glusterd.service && \

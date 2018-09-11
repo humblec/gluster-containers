@@ -1,0 +1,11 @@
+[Unit]
+Description=Setup fake disk for use with Gluster
+Before=gluster-setup.service
+
+[Service]
+Type=oneshot
+PassEnvironment=USE_FAKE_DISK FAKE_DISK_FILE FAKE_DISK_SIZE FAKE_DISK_DEV
+ExecStart=/usr/libexec/gluster/fake-disk.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -69,6 +69,8 @@ RUN true \
     && true
 
 VOLUME [ "/sys/fs/cgroup" ]
+ADD gluster-fake-disk.service /etc/systemd/system/gluster-fake-disk.service
+ADD fake-disk.sh /usr/libexec/gluster/fake-disk.sh
 ADD gluster-setup.service /etc/systemd/system/gluster-setup.service
 ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 ADD gluster-block-setup.service /etc/systemd/system/gluster-block-setup.service
@@ -81,6 +83,7 @@ ADD check_diskspace.sh /usr/local/bin/check_diskspace.sh
 
 RUN chmod 644 /etc/systemd/system/gluster-setup.service && \
 chmod 644 /etc/systemd/system/gluster-check-diskspace.service && \
+chmod 755 /usr/libexec/gluster/fake-disk.sh && \
 chmod 500 /usr/sbin/gluster-setup.sh && \
 chmod 644 /etc/systemd/system/gluster-block-setup.service && \
 chmod 500 /usr/sbin/gluster-block-setup.sh && \
@@ -89,6 +92,7 @@ chmod +x /usr/local/bin/status-probe.sh && \
 chmod +x /usr/local/bin/check_diskspace.sh && \
 systemctl disable nfs-server.service && \
 systemctl mask getty.target && \
+systemctl enable gluster-fake-disk.service && \
 systemctl enable gluster-setup.service && \
 systemctl enable gluster-block-setup.service && \
 systemctl enable gluster-blockd.service && \
