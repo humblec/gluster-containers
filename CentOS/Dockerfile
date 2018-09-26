@@ -44,12 +44,19 @@ sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config && \
 sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service && \
 sed -i 's/rpcbind\.service/gluster-setup\.service/g' /usr/lib/systemd/system/glusterd.service && \
 sed -i 's/rpcbind\.service//g' /usr/lib/systemd/system/gluster-blockd.service && \
-sed -i 's/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", ENV{SYSTEMD_READY}="0"/ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", GOTO="systemd_end"/g' /usr/lib/udev/rules.d/99-systemd.rules && \
 mkdir -p /etc/glusterfs_bkp /var/lib/glusterd_bkp /var/log/glusterfs_bkp &&\
 cp -r /etc/glusterfs/* /etc/glusterfs_bkp &&\
 cp -r /var/lib/glusterd/* /var/lib/glusterd_bkp &&\
 cp -r /var/log/glusterfs/* /var/log/glusterfs_bkp && \
 mkdir -p /var/log/core;
+
+# do not run udev (if needed, bind-mount /run/udev instead?)
+RUN true \
+    && systemctl mask systemd-udev-trigger.service \
+    && systemctl mask systemd-udevd.service \
+    && systemctl mask systemd-udevd.socket \
+    && systemctl mask systemd-udevd-kernel.socket \
+    && true
 
 # use lvmetad from the host, dont run it in the container
 # don't wait for udev to manage the /dev entries, disable udev_sync, udev_rules in lvm.conf
