@@ -33,7 +33,7 @@ case "$mode" in
         fi
         require systemctl -q is-active glusterd.service
         
-        if [[ "$GLUSTER_BLOCKD_STATUS_PROBE_SKIP" -ne 1 ]]; then
+        if [[ "$GLUSTER_BLOCKD_STATUS_PROBE_ENABLE" -eq 1 ]]; then
             require systemctl -q is-active gluster-blockd.service
         fi
 
