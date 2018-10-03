@@ -32,7 +32,11 @@ case "$mode" in
             echo "warning: no mode provided. Assuming liveness probe" >&2
         fi
         require systemctl -q is-active glusterd.service
-        require systemctl -q is-active gluster-blockd.service
+        
+        if [[ "$GLUSTER_BLOCKD_STATUS_PROBE_SKIP" -ne 1 ]]; then
+            require systemctl -q is-active gluster-blockd.service
+        fi
+
         require filesystem_used_under_limit "/var/lib/glusterd" 99
     ;;
     *)
