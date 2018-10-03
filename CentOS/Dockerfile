@@ -74,6 +74,7 @@ ADD gluster-setup.sh /usr/sbin/gluster-setup.sh
 ADD gluster-block-setup.service /etc/systemd/system/gluster-block-setup.service
 ADD gluster-block-setup.sh /usr/sbin/gluster-block-setup.sh
 ADD update-params.sh /usr/local/bin/update-params.sh
+ADD status-probe.sh /usr/local/bin/status-probe.sh
 ADD tcmu-runner-params /etc/sysconfig/tcmu-runner-params
 ADD gluster-check-diskspace.service  /etc/systemd/system/gluster-check-diskspace.service
 ADD check_diskspace.sh /usr/local/bin/check_diskspace.sh
@@ -84,6 +85,7 @@ chmod 500 /usr/sbin/gluster-setup.sh && \
 chmod 644 /etc/systemd/system/gluster-block-setup.service && \
 chmod 500 /usr/sbin/gluster-block-setup.sh && \
 chmod +x /usr/local/bin/update-params.sh && \
+chmod +x /usr/local/bin/status-probe.sh && \
 chmod +x /usr/local/bin/check_diskspace.sh && \
 systemctl disable nfs-server.service && \
 systemctl mask getty.target && \
