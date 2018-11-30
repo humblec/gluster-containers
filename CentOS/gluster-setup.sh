@@ -27,7 +27,7 @@ main () {
           echo "$i is not empty"
     else
           bkp=$i"_bkp"
-          cp -r $bkp/* $i
+          cp -af $bkp/* $i
           if [ $? -eq 1 ]
           then
                 echo "Failed to copy $i"
