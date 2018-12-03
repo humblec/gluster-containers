@@ -43,11 +43,11 @@ This repository consists of Dockerfiles for GlusterFS to build on both CentOS an
 For Fedora,
 
 ~~~
-$ docker build -t gluster-fedora docker/Fedora/Dockerfile
+$ docker build -t gluster-fedora Fedora
 ~~~
 For CentOS,
 ~~~
-$ docker build -t gluster-centos docker/CentOS/Dockerfile
+$ docker build -t gluster-centos CentOS
 ~~~
 This command will build the docker image from the Dockerfile and will be assigned the name gluster-fedora or gluster-centos respectively. ‘-t’ option is used to give a name to the image we built.
 
