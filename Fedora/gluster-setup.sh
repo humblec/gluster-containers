@@ -56,12 +56,14 @@ main () {
         lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
         mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sts=$?
-        if [ $sts -ne 0 ]
+        if [ $sts -eq 0 ]
         then
-              echo "mount command exited with code ${sts}" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
-              exit 1
+              echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+              exit 0
         fi
-        echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+
+        # mounting (some of) the bricks failed, retry
+        echo "mount command exited with code ${sts}" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sleep 40
         cat $GLUSTERFS_CUSTOM_FSTAB|cut -f 2 -d " " | while read line
         do
