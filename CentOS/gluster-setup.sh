@@ -39,14 +39,14 @@ main () {
 
   if test "$(ls $GLUSTERFS_LOG_CONT_DIR)"
   then
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/brickattr
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/lvscan
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/mountfstab
+        true > $GLUSTERFS_LOG_CONT_DIR/brickattr
+        true > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
+        true > $GLUSTERFS_LOG_CONT_DIR/lvscan
+        true > $GLUSTERFS_LOG_CONT_DIR/mountfstab
   else
         mkdir $GLUSTERFS_LOG_CONT_DIR
-        echo "" > $GLUSTERFS_LOG_CONT_DIR/brickattr
-        echo "" > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
+        true > $GLUSTERFS_LOG_CONT_DIR/brickattr
+        true > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
   fi
   if test "$(ls $GLUSTERFS_CUSTOM_FSTAB)"
   then
@@ -85,7 +85,7 @@ main () {
                    sleep 0.5
              fi
         done
-        if [ "$(wc -l $GLUSTERFS_LOG_CONT_DIR/failed_bricks )" -gt 1 ]
+        if [ "$(wc -l $GLUSTERFS_LOG_CONT_DIR/failed_bricks )" -gt 0 ]
         then
               vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
               sleep 10
