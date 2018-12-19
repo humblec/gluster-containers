@@ -5,6 +5,7 @@
 : ${TCMU_LOGDIR:=/var/log/glusterfs/gluster-block}
 : ${GB_GLFS_LRU_COUNT:=15}
 : ${GLUSTER_BLOCK_ENABLED:=TRUE}
+: ${HOST_DEV_DIR:=/mnt/host-dev}
 
 if [ "$GLUSTER_BLOCK_ENABLED" == TRUE ]; then
         echo "Enabling gluster-block service and updating env. variables"
@@ -23,6 +24,12 @@ else
         echo "Disabling gluster-block service"
         systemctl disable gluster-block-setup.service
         systemctl disable gluster-blockd.service
+fi
+
+if [ -c "${HOST_DEV_DIR}/zero" ] && [ -c "${HOST_DEV_DIR}/null" ]; then
+    # looks like an alternate "host dev" has been provided
+    # to the container. Use that as our /dev ongoing
+    mount --rbind "${HOST_DEV_DIR}" /dev
 fi
 
 # Hand off to CMD
