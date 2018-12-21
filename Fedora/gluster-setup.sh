@@ -83,7 +83,7 @@ main () {
                    sleep 0.5
              fi
         done
-        if [ $(cat $GLUSTERFS_LOG_CONT_DIR/failed_bricks | wc -l) -gt 0 ]
+        if [ "$(wc -l < $GLUSTERFS_LOG_CONT_DIR/failed_bricks)" -gt 0 ]
         then
               vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
               sleep 10
