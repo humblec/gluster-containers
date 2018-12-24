@@ -39,14 +39,14 @@ main () {
 
   if test "$(ls $GLUSTERFS_LOG_CONT_DIR)"
   then
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/brickattr
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/lvscan
-            echo "" > $GLUSTERFS_LOG_CONT_DIR/mountfstab
+        true > $GLUSTERFS_LOG_CONT_DIR/brickattr
+        true > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
+        true > $GLUSTERFS_LOG_CONT_DIR/lvscan
+        true > $GLUSTERFS_LOG_CONT_DIR/mountfstab
   else
         mkdir $GLUSTERFS_LOG_CONT_DIR
-        echo "" > $GLUSTERFS_LOG_CONT_DIR/brickattr
-        echo "" > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
+        true > $GLUSTERFS_LOG_CONT_DIR/brickattr
+        true > $GLUSTERFS_LOG_CONT_DIR/failed_bricks
   fi
   if test "$(ls $GLUSTERFS_CUSTOM_FSTAB)"
   then
@@ -56,12 +56,14 @@ main () {
         lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
         mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sts=$?
-        if [ $sts -ne 0 ]
+        if [ $sts -eq 0 ]
         then
-              echo "mount command exited with code ${sts}" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
-              exit 1
+              echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+              exit 0
         fi
-        echo "Mount command Successful" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
+
+        # mounting (some of) the bricks failed, retry
+        echo "mount command exited with code ${sts}" >> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sleep 40
         cat $GLUSTERFS_CUSTOM_FSTAB|cut -f 2 -d " " | while read line
         do
@@ -81,7 +83,7 @@ main () {
                    sleep 0.5
              fi
         done
-        if [ $(cat $GLUSTERFS_LOG_CONT_DIR/failed_bricks | wc -l) -gt 1 ]
+        if [ "$(wc -l < $GLUSTERFS_LOG_CONT_DIR/failed_bricks)" -gt 0 ]
         then
               vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
               sleep 10
