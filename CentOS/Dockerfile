@@ -66,6 +66,7 @@ RUN true \
     && systemctl mask lvm2-lvmetad.socket \
     && sed -i 's/^\sudev_rules\s*=\s*1/udev_rules = 0/' /etc/lvm/lvm.conf \
     && sed -i 's/^\sudev_sync\s*=\s*1/udev_sync= 0/' /etc/lvm/lvm.conf \
+    && sed -i 's/^\sobtain_device_list_from_udev\s*=\s*1/obtain_device_list_from_udev = 0/' /etc/lvm/lvm.conf \
     && true
 
 VOLUME [ "/sys/fs/cgroup" ]
