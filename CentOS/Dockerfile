@@ -50,6 +50,19 @@ cp -r /var/lib/glusterd/* /var/lib/glusterd_bkp &&\
 cp -r /var/log/glusterfs/* /var/log/glusterfs_bkp && \
 mkdir -p /var/log/core;
 
+# downgrade lvm2 because of regression reported in https://bugzilla.redhat.com/1676612
+# once the bug is fixed, disable obtain_device_list_from_udev in lvm.conf
+RUN true \
+    && yum -y downgrade device-mapper-libs-1.02.149-10.el7_6.2.x86_64 \
+                        device-mapper-1.02.149-10.el7_6.2.x86_64 \
+                        device-mapper-event-libs-1.02.149-10.el7_6.2.x86_64 \
+                        device-mapper-event-1.02.149-10.el7_6.2.x86_64 \
+                        device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64 \
+                        lvm2-libs-2.02.180-10.el7_6.2.x86_64 \
+                        lvm2-2.02.180-10.el7_6.2.x86_64 \
+    && yum -y clean all \
+    && true
+
 # do not run udev (if needed, bind-mount /run/udev instead?)
 RUN true \
     && systemctl mask systemd-udev-trigger.service \
