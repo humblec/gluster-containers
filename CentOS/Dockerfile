@@ -82,6 +82,15 @@ RUN true \
     && sed -i 's/^\sobtain_device_list_from_udev\s*=\s*1/obtain_device_list_from_udev = 0/' /etc/lvm/lvm.conf \
     && true
 
+# prevent dmeventd from running in the container, it may cause conflicts with
+# the service running on the host
+# monitoring of activated LVs can not be done inside the container
+RUN true \
+    && systemctl mask dmevent.service \
+    && systemctl mask dmevent.socket \
+    && sed -i 's/^\smonitoring\s*=\s*1/monitoring = 0/' /etc/lvm/lvm.conf \
+    && true
+
 VOLUME [ "/sys/fs/cgroup" ]
 ADD gluster-fake-disk.service /etc/systemd/system/gluster-fake-disk.service
 ADD fake-disk.sh /usr/libexec/gluster/fake-disk.sh
