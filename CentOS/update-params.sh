@@ -5,6 +5,32 @@
 : ${TCMU_LOGDIR:=/var/log/glusterfs/gluster-block}
 : ${GB_GLFS_LRU_COUNT:=15}
 : ${HOST_DEV_DIR:=/mnt/host-dev}
+: ${CGROUP_PIDS_MAX:=max}
+
+set_cgroup_pids() {
+  local ret=0
+  local pids=$1
+  local cgroup max
+
+  cgroup=$(awk -F: '/:pids:/{print $3}' /proc/self/cgroup)
+
+  max=$(cat /sys/fs/cgroup/pids/"${cgroup}"/pids.max)
+  echo "maximum number of pids configured in cgroups: ${max}"
+
+  echo "${pids}" > /sys/fs/cgroup/pids/"${cgroup}"/pids.max
+  ret=$?
+
+  max=$(cat /sys/fs/cgroup/pids/"${cgroup}"/pids.max)
+  echo "maximum number of pids configured in cgroups (reconfigured): ${max}"
+
+  return ${ret}
+}
+
+# do not change cgroup/pids when CGROUP_PIDS_MAX is set to 0
+if [[ "${CGROUP_PIDS_MAX}" != '0' ]]
+then
+  set_cgroup_pids ${CGROUP_PIDS_MAX}
+fi
 
 echo "env variable is set. Update in gluster-blockd.service"
 #FIXME To update in environment file
