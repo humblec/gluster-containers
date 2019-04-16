@@ -4,7 +4,8 @@ MAINTAINER Humble Chirammal hchiramm@redhat.com Saravanakumar Arumugam sarumuga@
 
 ENV container docker
 
-LABEL architecture="x86_64" \
+ENV ARCH "x86_64"
+LABEL architecture="$ARCH" \
       name="gluster/gluster-centos" \
       version="latest" \
       vendor="CentOS Community" \
@@ -53,13 +54,13 @@ mkdir -p /var/log/core;
 # downgrade lvm2 because of regression reported in https://bugzilla.redhat.com/1676612
 # once the bug is fixed, disable obtain_device_list_from_udev in lvm.conf
 RUN true \
-    && yum -y downgrade device-mapper-libs-1.02.149-10.el7_6.2.x86_64 \
-                        device-mapper-1.02.149-10.el7_6.2.x86_64 \
-                        device-mapper-event-libs-1.02.149-10.el7_6.2.x86_64 \
-                        device-mapper-event-1.02.149-10.el7_6.2.x86_64 \
-                        device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64 \
-                        lvm2-libs-2.02.180-10.el7_6.2.x86_64 \
-                        lvm2-2.02.180-10.el7_6.2.x86_64 \
+    && yum -y downgrade device-mapper-libs-1.02.149-10.el7_6.2 \
+                        device-mapper-1.02.149-10.el7_6.2 \
+                        device-mapper-event-libs-1.02.149-10.el7_6.2 \
+                        device-mapper-event-1.02.149-10.el7_6.2 \
+                        device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1 \
+                        lvm2-libs-2.02.180-10.el7_6.2 \
+                        lvm2-2.02.180-10.el7_6.2 \
     && yum -y clean all \
     && true
 
