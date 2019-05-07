@@ -87,8 +87,8 @@ RUN true \
 # the service running on the host
 # monitoring of activated LVs can not be done inside the container
 RUN true \
-    && systemctl mask dmevent.service \
-    && systemctl mask dmevent.socket \
+    && systemctl mask dm-event.service \
+    && systemctl mask dm-event.socket \
     && sed -i 's/^\smonitoring\s*=\s*1/monitoring = 0/' /etc/lvm/lvm.conf \
     && true
 
