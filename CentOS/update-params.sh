@@ -4,7 +4,7 @@
 : ${GB_LOGDIR:=/var/log/glusterfs/gluster-block}
 : ${TCMU_LOGDIR:=/var/log/glusterfs/gluster-block}
 : ${GB_GLFS_LRU_COUNT:=15}
-: ${GB_CLI_TIMEOUT:=600}
+: ${GB_CLI_TIMEOUT:=900}
 : ${HOST_DEV_DIR:=/mnt/host-dev}
 : ${CGROUP_PIDS_MAX:=max}
 
@@ -37,7 +37,8 @@ echo "env variable is set. Update in gluster-blockd.service"
 #FIXME To update in environment file
 sed -i '/GB_GLFS_LRU_COUNT=/s/GB_GLFS_LRU_COUNT=.*/'GB_GLFS_LRU_COUNT="$GB_GLFS_LRU_COUNT"\"'/'  /usr/lib/systemd/system/gluster-blockd.service
 sed -i '/EnvironmentFile/i Environment="GB_LOGDIR='$GB_LOGDIR'"' /usr/lib/systemd/system/gluster-blockd.service
-sed -i '/EnvironmentFile/i Environment="GB_CLI_TIMEOUT='$GB_CLI_TIMEOUT'"' /usr/lib/systemd/system/gluster-blockd.service
+
+sed -i "s/^#GB_CLI_TIMEOUT=.*/GB_CLI_TIMEOUT=${GB_CLI_TIMEOUT}/" /etc/sysconfig/gluster-blockd
 
 sed -i "s#TCMU_LOGDIR=.*#TCMU_LOGDIR='$TCMU_LOGDIR'#g" /etc/sysconfig/tcmu-runner-params
 
