@@ -7,6 +7,7 @@
 : ${GB_CLI_TIMEOUT:=900}
 : ${HOST_DEV_DIR:=/mnt/host-dev}
 : ${CGROUP_PIDS_MAX:=max}
+: ${TCMU_LOCKDIR:=/var/run/lock}
 
 set_cgroup_pids() {
   local ret=0
@@ -44,6 +45,9 @@ sed -i "s#TCMU_LOGDIR=.*#TCMU_LOGDIR='$TCMU_LOGDIR'#g" /etc/sysconfig/tcmu-runne
 
 sed -i '/ExecStart/i EnvironmentFile=-/etc/sysconfig/tcmu-runner-params' /usr/lib/systemd/system/tcmu-runner.service
 sed -i  '/tcmu-log-dir=/s/tcmu-log-dir.*/tcmu-log-dir $TCMU_LOGDIR/' /usr/lib/systemd/system/tcmu-runner.service
+
+# lock directory used by tcmu-runner.service
+mkdir -p ${TCMU_LOCKDIR}
 
 if [ -c "${HOST_DEV_DIR}/zero" ] && [ -c "${HOST_DEV_DIR}/null" ]; then
     # looks like an alternate "host dev" has been provided
