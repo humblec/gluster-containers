@@ -51,10 +51,10 @@ main () {
   if test "$(ls $GLUSTERFS_CUSTOM_FSTAB)"
   then
         sleep 5
-        pvscan > $GLUSTERFS_LOG_CONT_DIR/pvscan
-        vgscan > $GLUSTERFS_LOG_CONT_DIR/vgscan
-        lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
-        vgchange -ay > $GLUSTERFS_LOG_CONT_DIR/vgchange
+        exec-on-host pvscan > $GLUSTERFS_LOG_CONT_DIR/pvscan
+        exec-on-host vgscan > $GLUSTERFS_LOG_CONT_DIR/vgscan
+        exec-on-host lvscan > $GLUSTERFS_LOG_CONT_DIR/lvscan
+        exec-on-host vgchange -ay > $GLUSTERFS_LOG_CONT_DIR/vgchange
 
         mount -a --fstab $GLUSTERFS_CUSTOM_FSTAB &> $GLUSTERFS_LOG_CONT_DIR/mountfstab
         sts=$?
@@ -87,7 +87,7 @@ main () {
         done
         if [ "$(wc -l < $GLUSTERFS_LOG_CONT_DIR/failed_bricks)" -gt 0 ]
         then
-              vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
+              exec-on-host vgscan --mknodes > $GLUSTERFS_LOG_CONT_DIR/vgscan_mknodes
               sleep 10
               mount -a --fstab $GLUSTERFS_LOG_CONT_DIR/failed_bricks
         fi

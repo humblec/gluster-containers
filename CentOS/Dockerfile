@@ -94,6 +94,7 @@ ADD status-probe.sh /usr/local/bin/status-probe.sh
 ADD tcmu-runner-params /etc/sysconfig/tcmu-runner-params
 ADD gluster-check-diskspace.service  /etc/systemd/system/gluster-check-diskspace.service
 ADD check_diskspace.sh /usr/local/bin/check_diskspace.sh
+ADD exec-on-host.sh /usr/sbin/exec-on-host
 
 RUN chmod 644 /etc/systemd/system/gluster-setup.service && \
 chmod 644 /etc/systemd/system/gluster-check-diskspace.service && \
