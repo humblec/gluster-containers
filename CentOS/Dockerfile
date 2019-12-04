@@ -80,6 +80,14 @@ RUN true \
     && sed -i 's/^\smonitoring\s*=\s*1/monitoring = 0/' /etc/lvm/lvm.conf \
     && true
 
+# mask services that aren't required in the container and/or might interfere
+RUN true \
+    && systemctl mask getty.target \
+    && systemctl mask systemd-journal-flush.service \
+    && systemctl mask rpcbind.socket \
+    && true
+
+
 VOLUME [ "/sys/fs/cgroup" ]
 ADD gluster-fake-disk.service /etc/systemd/system/gluster-fake-disk.service
 ADD fake-disk.sh /usr/libexec/gluster/fake-disk.sh
@@ -104,7 +112,6 @@ chmod +x /usr/local/bin/update-params.sh && \
 chmod +x /usr/local/bin/status-probe.sh && \
 chmod +x /usr/local/bin/check_diskspace.sh && \
 systemctl disable nfs-server.service && \
-systemctl mask getty.target && \
 systemctl enable gluster-fake-disk.service && \
 systemctl enable gluster-setup.service && \
 systemctl enable gluster-block-setup.service && \
