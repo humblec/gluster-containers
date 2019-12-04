@@ -31,7 +31,7 @@ COPY fake-disk.sh /usr/libexec/gluster/fake-disk.sh
 
 RUN dnf -y update && \
     sed -i "s/LANG/\#LANG/g" /etc/locale.conf && \
-    dnf -y install systemd-udev glusterfs-server dbus-python nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos sudo xfsprogs && \
+    dnf -y install systemd-udev glusterfs-server dbus-python nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos xfsprogs && \
     dnf clean all && \
     sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config && \
     sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service && \
